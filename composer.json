@@ -1,0 +1,20 @@
+{
+  "name": "ailyin/phpcs-ds-pre-commit",
+  "description": "Provides all necessary dependencies for phpcs with drupal coding standards",
+  "type": "library",
+  "license": "ICS",
+  "authors": [
+    {
+      "name": "Artyom Ilyin",
+      "email": "a.ilyin@ydt-global.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "squizlabs/php_codesniffer": "^3.0@dev",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+    "neronmoon/scriptsdev": "^0.1.6",
+    "asm89/twig-lint": "@dev",
+    "drupal/coder": "^8.3"
+  }
+}
