@@ -8,6 +8,7 @@ TODO:
 - Add js, css checkers
 - Extend package functionality to use more Drupal 8 versions(at least all supported)
 - Add functionality for custom installation
+- Add security check package
 - More to go....
 
 
