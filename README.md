@@ -1,14 +1,14 @@
 phpcs-ds-pre-commit
 =======================
 
-Provides all necessary dependencies for PHP code sniffer with Drupal standards
+Provides all necessary dependencies for PHP code sniffer with Drupal standards and twig linter
 
 TODO:
 --------
 - Add js, css checkers
 - Extend package functionality to use more Drupal 8 versions(at least all supported)
+- Add functionality for custom installation
 - More to go....
-- ../../drupal/coder/coder_sniffer
 
 
 Installation
@@ -16,41 +16,32 @@ Installation
 
 TODO: update Readme file to use recent versions of packages.
 
-update your `composer.json` by adding the code below to `repositories` property of your `composer.json`
+First of all install `neronmoon/scriptsdev` package.
+
+Update your `composer.json` by adding the code below to `repositories` property of your `composer.json`
 
         {
             "type": "vcs",
             "url": "git@github.com:KupnoH/pre-commit-linter.git",
-            "options": {
-                "ssh2": {
-                    "pubkey_file": "./ssh_keys/phpcs_ds.pub",
-                    "privkey_file": "./ssh_keys/phpcs_ds"
-                }
-            }
         }
 
-add `scripts` property to your `composer.json` file and paste the script below:
+add `scripts-dev` property to your `composer.json` file and paste the script below:
 
 
-    "scripts": {
-      "setup-linters": [
-        "sh ./path/to/setup.sh"
-      ]
+    "scripts-dev": {
+        "post-install-cmd": [
+            "sh ./vendor/ailyin/pre-commit-linter/scripts/setup.sh"
+        ]
     },
 
-Unfortunately composer does not allow execution of any scripts from not root-package (@see https://getcomposer.org/doc/articles/scripts.md#what-is-a-script-), but maybe in future we will find a workaround for it, who knows.
+This command will run after composer install command and install all necessary scripts.
 
 after executing the steps above run the command below:
 
-`composer require --dev KupnoH/pre-commit-linter`
+`composer require --dev ailyin/pre-commit-linter`
 
-This command will install package `KupnoH/pre-commit-linter` from repository `git@github.com:KupnoH/pre-commit-linter.git` and all the necessary dependencies.
+This command will install package `ailyin/pre-commit-linter` from repository `git@github.com:KupnoH/pre-commit-linter.git` and all the necessary dependencies.
 
-To correctly handle pre-commits you should execute script `setup-linters`, added above. To execute it run the command below:
-
-`composer run-script setup-linters`
-
-It will create a `pre-commit` file in directory `.git/hooks` with all the necessary commands to execute.
 
 How to use
 -----------------
