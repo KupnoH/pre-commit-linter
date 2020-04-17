@@ -1,0 +1,70 @@
+#!/bin/sh
+
+PROJECT=`php -r "echo dirname(dirname(dirname(realpath('$0'))));"`
+STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep "\/custom\/" | grep "\\.install\|\\.module\|\\.inc\|\\.php\|\\.twig"`
+
+# PHPCS_PATH contains path to phpcs file. it is located in bin directory. If your composer.json file has "bin-dir"
+# option in config, paste it right after "$PROJECT/" if your composer json does not have such option, check your project
+# directory. By default bin directory located at $PROJECT/vendor/bin, but due to composer.json settings can be different.
+# TODO: Use one of these options, or create your own:
+# first option:
+ PHPCS_PATH="$PROJECT/vendor/bin/phpcs"
+# second option:
+# PHPCS_PATH="$PROJECT/bin/phpcs"
+TWIG_LINTER="$PROJECT/vendor/bin/twig-lint"
+
+# Determine if a file list is passed
+if [ "$#" -eq 1 ]
+then
+  oIFS=$IFS
+  IFS='
+  '
+  SFILES="$1"
+  IFS=$oIFS
+fi
+SFILES=${SFILES:-$STAGED_FILES_CMD}
+
+echo "Checking PHP Lint..."
+for FILE in $SFILES
+do
+  php -l -d display_errors=0 $PROJECT/$FILE
+  if [ $? != 0 ]
+  then
+    echo "Fix the error before commit."
+    exit 1
+  fi
+  FILES="$FILES $PROJECT/$FILE"
+done
+
+if [ "$FILES" != "" ]
+then
+  echo "Running Code Sniffer...(omits warnings)"
+  $PHPCS_PATH --standard=Drupal --encoding=utf-8 -n -p $FILES
+  if [ $? != 0 ]
+  then
+    echo "Fix the error before commit."
+    exit 1
+  fi
+
+  echo "Running CS Drupal Best Practices...(includes warnings)"
+  $PHPCS_PATH --standard=DrupalPractice --encoding=utf-8 -p $FILES
+  if [ $? != 0 ]
+  then
+    echo "Fix the error before commit."
+    exit 1
+  fi
+
+  echo "Running Twig linter..."
+  for FILE in $FILES
+  do
+    $TWIG_LINTER lint $FILE
+    if [ $? != 0 ]
+    then
+      echo "Fix the error before commit."
+      exit 1
+    fi
+  done
+
+fi
+
+exit $?

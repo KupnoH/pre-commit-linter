@@ -8,6 +8,7 @@ TODO:
 - Add js, css checkers
 - Extend package functionality to use more Drupal 8 versions(at least all supported)
 - More to go....
+- ../../drupal/coder/coder_sniffer
 
 
 Installation
