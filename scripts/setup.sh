@@ -5,8 +5,8 @@
 
 ### Create Codesniffer symlink ###
 # Target file.
-TARGET=../../../../drupal/coder/coder_sniffer/Drupal
-TARGET_DP=../../../../drupal/coder/coder_sniffer/DrupalPractice
+TARGET=../../../../../drupal/coder/coder_sniffer/Drupal
+TARGET_DP=../../../../../drupal/coder/coder_sniffer/DrupalPractice
 # Link name.
 LINK_NAME=vendor/squizlabs/php_codesniffer/src/Standards/Drupal
 LINK_NAME_DP=vendor/squizlabs/php_codesniffer/src/Standards/DrupalPractice
