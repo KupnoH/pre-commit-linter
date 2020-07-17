@@ -43,7 +43,7 @@ after executing the steps above run the command below:
 
 If you are experiencing problems with path(OS Windows(TODO: add explanations here)) use the following command(It will install package from branch `da_issue`:
 
-`composer require --dev ailyin/pre-commit-linter:dev-issue#1__master`
+`composer require --dev ailyin/pre-commit-linter:dev-da_issue`
 
 This command will install package `ailyin/pre-commit-linter` from repository `git@github.com:KupnoH/pre-commit-linter.git` and all the necessary dependencies.
 
